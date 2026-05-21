@@ -1,0 +1,95 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+const today = new Date().toLocaleDateString();
+---
+<SiteLayout
+  title="Sample hosted AI disclosure page — TransparentAI"
+  description="A preview of the public AI transparency page TransparentAI hosts for customers."
+>
+  <section class="border-b border-border bg-surface">
+    <div class="mx-auto flex max-w-5xl flex-col gap-3 px-6 py-8 md:flex-row md:items-center md:justify-between">
+      <div>
+        <div class="text-xs font-semibold uppercase tracking-wider text-accent">
+          Hosted disclosure page · Preview
+        </div>
+        <div class="mt-1 text-sm text-muted-foreground">
+          Lives at <span class="font-mono text-primary">acme-notes.disclosur.co</span>
+        </div>
+      </div>
+      <div class="flex gap-2">
+        <a href="/packet">
+          <button class="inline-flex items-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground hover:bg-accent/10">Back to packet</button>
+        </a>
+        <button class="inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">Publish</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-6 py-14">
+    <div class="rounded-lg border border-border bg-card p-10">
+      <div class="flex items-center gap-2 text-primary">
+        <div class="text-sm font-semibold">Acme Notes — AI Transparency</div>
+      </div>
+      <h1 class="mt-6 font-serif text-3xl font-semibold tracking-tight text-primary md:text-4xl">
+        How we use AI at Acme Notes
+      </h1>
+      <p class="mt-4 text-muted-foreground">
+        We use third-party AI models to power summarization, chat, and tagging
+        features in our product. This page describes which features use AI, which
+        providers we rely on, and how we label AI-generated content for our users.
+      </p>
+
+      <div class="mt-10 space-y-8 text-sm leading-relaxed text-primary">
+        <div>
+          <h2 class="font-serif text-lg font-semibold text-primary">AI features in our product</h2>
+          <div class="mt-2">
+            <ul class="list-inside list-disc space-y-1.5 text-muted-foreground marker:text-accent">
+              <li><strong class="text-primary">Meeting summarizer</strong> — AI-generated summary text from your meeting transcripts.</li>
+              <li><strong class="text-primary">In-app chat assistant</strong> — A conversational AI that helps you search and act on your notes.</li>
+              <li><strong class="text-primary">Auto-tagging</strong> — AI-assisted labeling of notes for organization.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div>
+          <h2 class="font-serif text-lg font-semibold text-primary">Model providers</h2>
+          <p class="mt-2 text-muted-foreground">
+            We currently use models from OpenAI and Anthropic. We do not allow these
+            providers to train on your data. Inputs and outputs may be retained by the
+            provider for up to 30 days for abuse monitoring.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-serif text-lg font-semibold text-primary">How AI-generated content is labeled</h2>
+          <p class="mt-2 text-muted-foreground">
+            AI-generated text in Acme Notes is shown with a visible
+            "AI-generated" indicator. The chat assistant identifies itself as AI in
+            every conversation. We are rolling out persistent labeling for AI-suggested
+            tags in our next release.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-serif text-lg font-semibold text-primary">Changes and updates</h2>
+          <p class="mt-2 text-muted-foreground">
+            We publish a changelog of meaningful changes to our AI features. This page
+            was last updated on {today}.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-serif text-lg font-semibold text-primary">Contact</h2>
+          <p class="mt-2 text-muted-foreground">
+            Questions about how we use AI? Email{" "}
+            <a class="text-primary underline-offset-4 hover:underline" href="mailto:ai@acmenotes.example">ai@acmenotes.example</a>.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-12 border-t border-border pt-4 text-xs text-muted-foreground">
+        Hosted by TransparentAI · This page is generated documentation, not legal advice.
+      </div>
+    </div>
+  </section>
+</SiteLayout>

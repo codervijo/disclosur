@@ -1,0 +1,139 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+
+const STEPS = [
+  { id: "company", label: "Company" },
+  { id: "features", label: "AI features" },
+  { id: "models", label: "Models" },
+  { id: "disclosure", label: "Disclosure" },
+  { id: "jurisdiction", label: "Jurisdiction" },
+];
+const PROVIDERS = ["OpenAI", "Anthropic", "Google / Gemini", "Mistral", "Cohere", "Open-source"];
+---
+<SiteLayout
+  title="AI Disclosure Questionnaire — TransparentAI"
+  description="Guided intake that powers your AI Disclosure Readiness Packet."
+>
+  <section class="border-b border-border bg-surface">
+    <div class="mx-auto max-w-5xl px-6 py-12">
+      <div class="text-xs font-semibold uppercase tracking-wider text-accent">Readiness questionnaire</div>
+      <h1 class="mt-2 text-3xl font-semibold tracking-tight text-primary md:text-4xl">
+        Tell us how AI shows up in your product.
+      </h1>
+      <p class="mt-2 max-w-2xl text-muted-foreground">
+        5 short sections. About 10 minutes. We'll assemble a counsel-ready packet from your answers.
+      </p>
+      <div class="mt-8 grid grid-cols-5 gap-2">
+        {STEPS.map((s, i) => (
+          <div class="flex flex-col gap-2">
+            <div class={"h-1.5 rounded-full " + (i === 0 ? "bg-accent" : "bg-muted")}></div>
+            <div class={"text-xs " + (i === 0 ? "text-primary font-medium" : "text-muted-foreground")}>
+              {i + 1}. {s.label}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-6 py-12 space-y-10">
+    <div class="rounded-lg border border-border bg-card p-8 space-y-5">
+      <div class="text-sm font-semibold text-primary">1. Company</div>
+      <div>
+        <label for="company" class="text-xs text-muted-foreground">Company name</label>
+        <input id="company" placeholder="Acme Notes, Inc." class="mt-1.5 w-full rounded-md border border-input bg-background px-3 py-2 text-sm" />
+      </div>
+      <div class="grid gap-5 sm:grid-cols-2">
+        <div>
+          <label for="stage" class="text-xs text-muted-foreground">Funding stage</label>
+          <input id="stage" placeholder="Series B" class="mt-1.5 w-full rounded-md border border-input bg-background px-3 py-2 text-sm" />
+        </div>
+        <div>
+          <label for="users" class="text-xs text-muted-foreground">Monthly active users</label>
+          <input id="users" placeholder="125,000" class="mt-1.5 w-full rounded-md border border-input bg-background px-3 py-2 text-sm" />
+        </div>
+      </div>
+      <div>
+        <label for="desc" class="text-xs text-muted-foreground">One-line product description</label>
+        <input id="desc" placeholder="AI-powered meeting notes for product teams." class="mt-1.5 w-full rounded-md border border-input bg-background px-3 py-2 text-sm" />
+      </div>
+    </div>
+
+    <div class="rounded-lg border border-border bg-card p-8 space-y-5">
+      <div class="text-sm font-semibold text-primary">2. AI features</div>
+      <div>
+        <label for="features" class="text-xs text-muted-foreground">List user-facing AI features</label>
+        <textarea id="features" rows="5" placeholder={"e.g.\nMeeting summarizer (text generation)\nIn-app chat assistant\nAuto-tagging of notes"} class="mt-1.5 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"></textarea>
+      </div>
+      <div class="grid gap-2 sm:grid-cols-2">
+        {["Generates text", "Generates images", "Generates audio", "Generates video", "Chat interface", "Voice interface"].map((opt) => (
+          <label class="flex items-center gap-3 rounded-md border border-border bg-surface p-3 text-sm font-normal text-primary hover:border-accent/50">
+            <input type="checkbox" /> {opt}
+          </label>
+        ))}
+      </div>
+    </div>
+
+    <div class="rounded-lg border border-border bg-card p-8 space-y-5">
+      <div class="text-sm font-semibold text-primary">3. Models</div>
+      <div>
+        <div class="text-xs text-muted-foreground">Model providers in use</div>
+        <div class="mt-2 grid gap-2 sm:grid-cols-2">
+          {PROVIDERS.map((p) => (
+            <label class="flex items-center gap-3 rounded-md border border-border bg-surface p-3 text-sm font-normal text-primary hover:border-accent/50">
+              <input type="checkbox" /> {p}
+            </label>
+          ))}
+        </div>
+      </div>
+      <div>
+        <label for="finetune" class="text-xs text-muted-foreground">Do you fine-tune or host weights? Describe.</label>
+        <textarea id="finetune" rows="3" placeholder="We fine-tune a small Llama model for tagging." class="mt-1.5 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"></textarea>
+      </div>
+    </div>
+
+    <div class="rounded-lg border border-border bg-card p-8 space-y-5">
+      <div class="text-sm font-semibold text-primary">4. Disclosure</div>
+      <div>
+        <label for="labels" class="text-xs text-muted-foreground">How is AI-generated content labeled to users today?</label>
+        <textarea id="labels" rows="4" placeholder="Summary cards show a small 'AI-generated' tag." class="mt-1.5 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"></textarea>
+      </div>
+      <div class="grid gap-2 sm:grid-cols-2">
+        {[
+          "Public AI transparency page",
+          "In-product disclosure on AI features",
+          "Terms of Service mentions AI",
+          "Privacy policy mentions AI training",
+        ].map((opt) => (
+          <label class="flex items-center gap-3 rounded-md border border-border bg-surface p-3 text-sm font-normal text-primary hover:border-accent/50">
+            <input type="checkbox" /> {opt}
+          </label>
+        ))}
+      </div>
+    </div>
+
+    <div class="rounded-lg border border-border bg-card p-8 space-y-5">
+      <div class="text-sm font-semibold text-primary">5. Jurisdiction</div>
+      <div class="grid gap-2 sm:grid-cols-2">
+        {["California users", "EU users", "UK users", "US — other states"].map((opt) => (
+          <label class="flex items-center gap-3 rounded-md border border-border bg-surface p-3 text-sm font-normal text-primary hover:border-accent/50">
+            <input type="checkbox" /> {opt}
+          </label>
+        ))}
+      </div>
+      <div>
+        <label for="counsel" class="text-xs text-muted-foreground">Outside counsel contact (optional)</label>
+        <input id="counsel" placeholder="jane@lawfirm.com" class="mt-1.5 w-full rounded-md border border-input bg-background px-3 py-2 text-sm" />
+      </div>
+      <p class="text-xs text-muted-foreground">
+        TransparentAI does not provide legal advice. Your packet is for review by qualified counsel.
+      </p>
+    </div>
+
+    <div class="flex justify-end">
+      <button class="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:bg-primary/90">
+        Generate packet →
+      </button>
+    </div>
+  </section>
+</SiteLayout>

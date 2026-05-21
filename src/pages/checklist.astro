@@ -1,0 +1,81 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+
+const QUESTIONS = [
+  { q: "Do you offer a user-facing AI feature?" },
+  { q: "Does your product generate image, video, audio, or text content?" },
+  { q: "Do users interact with an AI chatbot?" },
+  { q: "Do users ever see AI-generated content without explicit labeling?", hint: "AB 853 focuses on provenance and labeling." },
+  {
+    q: "Which model providers do you use?",
+    options: ["OpenAI", "Anthropic", "Google / Gemini", "Mistral", "Open-source / self-hosted", "Other"],
+  },
+  { q: "Do you fine-tune models?" },
+  { q: "Do you host model weights or source code?" },
+  { q: "Do you publish an AI disclosure page?", hint: "Most teams should." },
+  { q: "Do you maintain an internal model inventory?" },
+  { q: "Do you log AI feature changes?" },
+  { q: "Do you serve California users?" },
+];
+---
+<SiteLayout
+  title="Free California AI Disclosure Readiness Check — TransparentAI"
+  description="Eleven plain-English questions to score your AI disclosure readiness against California SB 53 and AB 853."
+>
+  <section class="border-b border-border bg-surface">
+    <div class="mx-auto max-w-4xl px-6 py-14">
+      <div class="inline-flex items-center gap-2 rounded-full border border-border bg-background px-3 py-1 text-xs text-muted-foreground">
+        Free tool · No login required
+      </div>
+      <h1 class="mt-4 text-3xl font-semibold tracking-tight text-primary md:text-4xl">
+        California AI Disclosure Readiness Check
+      </h1>
+      <p class="mt-3 max-w-2xl text-muted-foreground">
+        Eleven plain-English questions. Get a readiness score, risk areas, and a
+        recommended next-step list you can share with counsel.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-4xl px-6 py-12">
+    <div class="space-y-4">
+      {QUESTIONS.map((q, i) => (
+        <div class="rounded-lg border border-border bg-card p-6">
+          <div class="flex items-start gap-4">
+            <div class="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-secondary text-xs font-semibold text-secondary-foreground">
+              {i + 1}
+            </div>
+            <div class="flex-1">
+              <div class="text-base font-medium text-primary">{q.q}</div>
+              {q.hint && <p class="mt-1 text-xs text-muted-foreground">{q.hint}</p>}
+              {q.options ? (
+                <div class="mt-4 grid gap-2 sm:grid-cols-2">
+                  {q.options.map((opt) => (
+                    <label class="flex items-center gap-3 rounded-md border border-border bg-surface p-3 text-sm font-normal text-primary hover:border-accent/50">
+                      <input type="checkbox" /> {opt}
+                    </label>
+                  ))}
+                </div>
+              ) : (
+                <div class="mt-4 flex gap-2">
+                  <button class="inline-flex items-center rounded-md border border-input bg-background px-3 py-1.5 text-sm font-medium text-foreground hover:bg-accent/10">Yes</button>
+                  <button class="inline-flex items-center rounded-md border border-input bg-background px-3 py-1.5 text-sm font-medium text-foreground hover:bg-accent/10">No</button>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-8 flex justify-end">
+      <button class="inline-flex items-center rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:bg-primary/90">
+        See my readiness score
+      </button>
+    </div>
+
+    <p class="mt-6 text-xs text-muted-foreground">
+      Scoring runs locally in your browser. No answers leave this page.
+    </p>
+  </section>
+</SiteLayout>

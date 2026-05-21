@@ -1,0 +1,40 @@
+---
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import "../styles/globals.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const {
+  title = "TransparentAI — AI compliance packets for LLM teams",
+  description = "Generate counsel-ready AI disclosure documentation for California SB 53 and AB 853.",
+} = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site ?? "https://disclosur.dev").toString();
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
+  </head>
+  <body>
+    <div class="flex min-h-screen flex-col bg-background">
+      <SiteHeader />
+      <main class="flex-1">
+        <slot />
+      </main>
+      <SiteFooter />
+    </div>
+  </body>
+</html>

@@ -1,0 +1,50 @@
+---
+import SiteLayout from "./SiteLayout.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const { title, description } = Astro.props;
+const { pathname } = Astro.url;
+
+const NAV = [
+  { to: "/dashboard", label: "Overview", exact: true },
+  { to: "/questionnaire", label: "Questionnaire" },
+  { to: "/dashboard/features", label: "AI Features" },
+  { to: "/dashboard/providers", label: "Model Providers" },
+  { to: "/dashboard/gaps", label: "Disclosure Gaps" },
+  { to: "/disclosure", label: "Public Page" },
+  { to: "/packet", label: "Counsel Packet" },
+  { to: "/dashboard/settings", label: "Settings" },
+];
+const isActive = (n: { to: string; exact?: boolean }) =>
+  n.exact ? pathname === n.to : pathname.startsWith(n.to);
+---
+<SiteLayout title={title} description={description}>
+  <div class="mx-auto flex w-full max-w-7xl flex-1 gap-8 px-6 py-8">
+    <aside class="hidden w-60 shrink-0 md:block">
+      <div class="sticky top-24 rounded-lg border border-border bg-surface p-3">
+        <div class="px-2 pb-2 pt-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+          Acme Notes, Inc.
+        </div>
+        <nav class="space-y-0.5">
+          {NAV.map((n) => (
+            <a
+              href={n.to}
+              class={
+                "flex items-center gap-2.5 rounded-md px-2.5 py-2 text-sm transition-colors " +
+                (isActive(n)
+                  ? "bg-primary text-primary-foreground"
+                  : "text-muted-foreground hover:bg-background hover:text-primary")
+              }
+            >{n.label}</a>
+          ))}
+        </nav>
+      </div>
+    </aside>
+    <div class="min-w-0 flex-1">
+      <slot />
+    </div>
+  </div>
+</SiteLayout>

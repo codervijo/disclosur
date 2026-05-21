@@ -1,0 +1,108 @@
+---
+import DashboardLayout from "../../layouts/DashboardLayout.astro";
+
+const STATS = [
+  { label: "Readiness score", value: "72", suffix: "/100" },
+  { label: "AI features", value: "3" },
+  { label: "Model providers", value: "2" },
+  { label: "Open gaps", value: "4" },
+];
+
+const GAPS = [
+  { sev: "High", title: "AI-generated summaries lack persistent labeling", area: "Provenance (AB 853)" },
+  { sev: "Med", title: "No public AI transparency page", area: "SB 53" },
+  { sev: "Med", title: "Provider list missing from Terms of Service", area: "Disclosure" },
+  { sev: "Low", title: "AI feature changelog not published", area: "Process" },
+];
+const sevClass = (s: string) =>
+  s === "High"
+    ? "bg-destructive/10 text-destructive"
+    : s === "Med"
+      ? "bg-warning/15 text-warning-foreground"
+      : "bg-secondary text-secondary-foreground";
+
+const PACKET_CHECKLIST: [string, boolean][] = [
+  ["Executive summary", true],
+  ["Product AI usage", true],
+  ["Model provider inventory", true],
+  ["Disclosure review", true],
+  ["Open questions for counsel", false],
+  ["Recommended remediation", false],
+  ["Public disclosure page draft", true],
+];
+---
+<DashboardLayout title="Dashboard — TransparentAI">
+  <div class="space-y-6">
+    <div class="flex items-start justify-between gap-4">
+      <div>
+        <div class="text-xs font-semibold uppercase tracking-wider text-accent">Overview</div>
+        <h1 class="mt-1 text-2xl font-semibold tracking-tight text-primary">AI Disclosure Readiness</h1>
+        <p class="mt-1 text-sm text-muted-foreground">Last updated 2 hours ago · Draft v1.3</p>
+      </div>
+      <div class="flex gap-2">
+        <a href="/disclosure">
+          <button class="inline-flex items-center gap-2 rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground hover:bg-accent/10">Preview public page</button>
+        </a>
+        <a href="/packet">
+          <button class="inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">Export packet</button>
+        </a>
+      </div>
+    </div>
+
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {STATS.map((s) => (
+        <div class="rounded-lg border border-border bg-card p-5">
+          <div class="flex items-center justify-between">
+            <div class="text-xs font-medium uppercase tracking-wider text-muted-foreground">{s.label}</div>
+          </div>
+          <div class="mt-3 flex items-baseline gap-1">
+            <div class="text-3xl font-semibold text-primary">{s.value}</div>
+            {s.suffix && <div class="text-sm text-muted-foreground">{s.suffix}</div>}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="grid gap-6 lg:grid-cols-3">
+      <div class="rounded-lg border border-border bg-card p-6 lg:col-span-2">
+        <div class="flex items-center justify-between">
+          <div class="text-sm font-semibold text-primary">Disclosure gaps</div>
+          <a href="/dashboard/gaps" class="text-xs text-muted-foreground hover:text-primary">View all</a>
+        </div>
+        <div class="mt-4 overflow-hidden rounded-md border border-border">
+          <table class="w-full text-sm">
+            <thead class="bg-surface text-left text-xs uppercase tracking-wider text-muted-foreground">
+              <tr><th class="px-4 py-2.5">Severity</th><th class="px-4 py-2.5">Finding</th><th class="px-4 py-2.5">Area</th></tr>
+            </thead>
+            <tbody class="divide-y divide-border">
+              {GAPS.map((g) => (
+                <tr>
+                  <td class="px-4 py-3">
+                    <span class={"rounded-full px-2 py-0.5 text-[11px] font-medium " + sevClass(g.sev)}>{g.sev}</span>
+                  </td>
+                  <td class="px-4 py-3 text-primary">{g.title}</td>
+                  <td class="px-4 py-3 text-muted-foreground">{g.area}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="rounded-lg border border-border bg-card p-6">
+        <div class="text-sm font-semibold text-primary">Packet checklist</div>
+        <ul class="mt-4 space-y-3 text-sm">
+          {PACKET_CHECKLIST.map(([t, ok]) => (
+            <li class="flex items-center gap-2">
+              <span class={ok ? "text-accent" : "text-muted-foreground"}>{ok ? "✓" : "•"}</span>
+              <span class={ok ? "text-primary" : "text-muted-foreground"}>{t}</span>
+            </li>
+          ))}
+        </ul>
+        <a href="/packet" class="mt-5 inline-block w-full">
+          <button class="w-full inline-flex items-center justify-center rounded-md border border-input bg-background px-3 py-1.5 text-sm font-medium text-foreground hover:bg-accent/10">Open packet preview</button>
+        </a>
+      </div>
+    </div>
+  </div>
+</DashboardLayout>

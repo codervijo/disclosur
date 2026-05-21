@@ -1,8 +1,49 @@
 ---
-// src/pages/index.astro
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import "../styles/globals.css";
+
 const site = "https://disclosur.dev";
-const title = "disclosur.dev";
-const description = "<fill in: 1-2 sentence value prop for SEO description>";
+const title = "TransparentAI — AI compliance packets for LLM teams";
+const description =
+  "Generate counsel-ready AI disclosure documentation for California SB 53 and AB 853. Built for product and legal teams shipping with LLMs.";
+
+const trustBadges = [
+  "Built for LLM apps",
+  "California AI transparency focused",
+  "Counsel-review ready",
+  "Exportable documentation",
+];
+
+const productCards = [
+  { title: "Applicability questionnaire", body: "Guided intake mapped to SB 53 and AB 853 triggers — no statute reading required." },
+  { title: "Model & AI feature inventory", body: "Track every model, provider, and user-facing AI feature in one source of truth." },
+  { title: "Disclosure gap analysis", body: "Automatic diff between what you ship and what California-style transparency expects." },
+  { title: "Counsel-ready packet export", body: "Executive summary, memo, and public page draft — exported to PDF and Google Docs." },
+];
+
+const lawyerQuestions = [
+  "Which AI features are user-facing?",
+  "Which models power them?",
+  "Do users know when content is AI-generated?",
+  "Do you rely on OpenAI, Anthropic, Gemini, or open-source models?",
+  "Do you have disclosure language?",
+  "Do you have a public AI transparency page?",
+  "What changed since the last release?",
+];
+
+const steps = [
+  { n: "01", t: "Run the checklist", b: "11 plain-English questions. Five minutes. No login required." },
+  { n: "02", t: "Complete the questionnaire", b: "Inventory your AI features, models, and disclosures with structured prompts." },
+  { n: "03", t: "Export your packet", b: "Hand counsel a PDF that maps each finding back to SB 53 and AB 853." },
+];
+
+const packetRows = [
+  "Model & provider inventory",
+  "Disclosure gap analysis",
+  "Public AI transparency page draft",
+  "Internal counsel memo",
+];
 ---
 <!doctype html>
 <html lang="en">
@@ -26,8 +67,7 @@ const description = "<fill in: 1-2 sentence value prop for SEO description>";
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
 
-    <!-- JSON-LD structured data: Organization + WebSite (static; domain
-         is known at scaffold time. Update description by hand if needed.) -->
+    <!-- JSON-LD structured data: Organization + WebSite -->
     <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -50,9 +90,190 @@ const description = "<fill in: 1-2 sentence value prop for SEO description>";
     </script>
   </head>
   <body>
-    <main>
-      <h1>{title}</h1>
-      <p>Scaffolded via <code>portfolio new bootstrap</code>.</p>
-    </main>
+    <div class="flex min-h-screen flex-col bg-background">
+      <SiteHeader />
+      <main class="flex-1">
+        <section class="relative overflow-hidden border-b border-border">
+          <div class="mx-auto max-w-7xl px-6 pb-20 pt-20 md:pt-28">
+            <div class="grid items-start gap-12 lg:grid-cols-12">
+              <div class="lg:col-span-7">
+                <div class="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 text-xs text-muted-foreground">
+                  Built for California SB 53 &amp; AB 853 readiness
+                </div>
+                <h1 class="mt-5 text-4xl font-semibold tracking-tight text-primary md:text-6xl">
+                  AI compliance packets for teams building with LLMs.
+                </h1>
+                <p class="mt-5 max-w-xl text-lg text-muted-foreground">
+                  TransparentAI helps product and legal teams generate disclosure-ready
+                  documentation for California AI transparency questions — without
+                  starting from a blank Google Doc.
+                </p>
+                <div class="mt-8 flex flex-wrap gap-3">
+                  <a href="/checklist">
+                    <button class="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:bg-primary/90">
+                      Start free checklist →
+                    </button>
+                  </a>
+                  <a href="/packet">
+                    <button class="inline-flex items-center rounded-md border border-input bg-background px-5 py-2.5 text-sm font-medium text-foreground hover:bg-accent/10">
+                      View sample packet
+                    </button>
+                  </a>
+                </div>
+                <div class="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">
+                  {trustBadges.map((b) => (
+                    <div class="flex items-center gap-2">✓ {b}</div>
+                  ))}
+                </div>
+              </div>
+
+              <div class="lg:col-span-5">
+                <div class="overflow-hidden rounded-lg border border-border bg-card shadow-xl shadow-primary/5">
+                  <div class="flex items-center justify-between border-b border-border bg-surface px-5 py-3">
+                    <div class="flex items-center gap-2 text-sm font-medium text-primary">
+                      AI Disclosure Readiness Packet
+                    </div>
+                    <span class="rounded-full bg-secondary px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-secondary-foreground">
+                      Draft v1.3
+                    </span>
+                  </div>
+                  <div class="space-y-4 p-6">
+                    <div>
+                      <div class="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Acme Notes, Inc.</div>
+                      <div class="mt-1 text-base font-semibold text-primary">Executive Summary</div>
+                      <p class="mt-1 text-sm leading-relaxed text-muted-foreground">
+                        Acme Notes ships 3 user-facing AI features powered by OpenAI
+                        and Anthropic. Two features are likely in scope for AB 853
+                        content provenance and require disclosure language updates
+                        before the next release.
+                      </p>
+                    </div>
+                    <div class="rounded-md border border-border bg-surface p-4">
+                      <div class="flex items-center justify-between text-xs text-muted-foreground">
+                        <span>Readiness score</span>
+                        <span class="font-medium text-primary">72 / 100</span>
+                      </div>
+                      <div class="mt-2 h-2 w-full overflow-hidden rounded-full bg-muted">
+                        <div class="h-full w-[72%] rounded-full bg-accent"></div>
+                      </div>
+                      <div class="mt-3 grid grid-cols-3 gap-3 text-center text-xs">
+                        <div><div class="font-semibold text-primary">3</div><div class="text-muted-foreground">AI features</div></div>
+                        <div><div class="font-semibold text-primary">2</div><div class="text-muted-foreground">Providers</div></div>
+                        <div><div class="font-semibold text-primary">4</div><div class="text-muted-foreground">Open gaps</div></div>
+                      </div>
+                    </div>
+                    <ul class="space-y-2 text-sm">
+                      {packetRows.map((row) => (
+                        <li class="flex items-center gap-2 text-muted-foreground">✓ {row}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="border-b border-border bg-surface">
+          <div class="mx-auto max-w-7xl px-6 py-20">
+            <div class="grid gap-12 lg:grid-cols-12">
+              <div class="lg:col-span-5">
+                <div class="text-xs font-semibold uppercase tracking-wider text-accent">The blank-doc problem</div>
+                <h2 class="mt-3 text-3xl font-semibold tracking-tight text-primary md:text-4xl">
+                  Your lawyer asks seven questions. You don't have one document that answers them.
+                </h2>
+                <p class="mt-4 text-base text-muted-foreground">
+                  California's AI transparency laws are arriving faster than internal
+                  process. Counsel needs concrete artifacts — not a Notion page and
+                  three Slack threads. TransparentAI gives you the artifact.
+                </p>
+              </div>
+              <div class="lg:col-span-7">
+                <div class="divide-y divide-border rounded-lg border border-border bg-card">
+                  {lawyerQuestions.map((q, i) => (
+                    <div class="flex items-start gap-4 px-6 py-4">
+                      <div class="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-secondary text-xs font-semibold text-secondary-foreground">
+                        {i + 1}
+                      </div>
+                      <div class="text-sm text-primary">{q}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="border-b border-border">
+          <div class="mx-auto max-w-7xl px-6 py-20">
+            <div class="max-w-2xl">
+              <div class="text-xs font-semibold uppercase tracking-wider text-accent">The product</div>
+              <h2 class="mt-3 text-3xl font-semibold tracking-tight text-primary md:text-4xl">
+                From questionnaire to counsel-ready packet.
+              </h2>
+              <p class="mt-3 text-muted-foreground">
+                Four building blocks that turn your AI surface area into something a GC can sign off on.
+              </p>
+            </div>
+            <div class="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+              {productCards.map((c) => (
+                <div class="rounded-lg border border-border bg-card p-6">
+                  <div class="grid h-10 w-10 place-items-center rounded-md bg-secondary text-secondary-foreground">◆</div>
+                  <div class="mt-5 text-base font-semibold text-primary">{c.title}</div>
+                  <p class="mt-2 text-sm leading-relaxed text-muted-foreground">{c.body}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section class="border-b border-border bg-surface">
+          <div class="mx-auto max-w-7xl px-6 py-20">
+            <div class="grid gap-12 lg:grid-cols-3">
+              {steps.map((s) => (
+                <div class="border-l-2 border-accent pl-5">
+                  <div class="text-xs font-mono text-accent">{s.n}</div>
+                  <div class="mt-2 text-lg font-semibold text-primary">{s.t}</div>
+                  <p class="mt-2 text-sm text-muted-foreground">{s.b}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div class="mx-auto max-w-5xl px-6 py-20">
+            <div class="rounded-lg border border-border bg-primary p-10 text-primary-foreground md:p-14">
+              <div class="flex flex-col items-start gap-6 md:flex-row md:items-center md:justify-between">
+                <div class="max-w-xl">
+                  <div class="inline-flex items-center gap-2 text-xs font-medium uppercase tracking-wider text-primary-foreground/70">
+                    Disclosure readiness, on the record
+                  </div>
+                  <h3 class="mt-3 text-2xl font-semibold tracking-tight md:text-3xl">
+                    Give your GC something to review this week.
+                  </h3>
+                  <p class="mt-2 text-sm text-primary-foreground/80">
+                    Start with the free California AI Disclosure Readiness Check.
+                  </p>
+                </div>
+                <div class="flex flex-wrap gap-3">
+                  <a href="/checklist">
+                    <button class="inline-flex items-center rounded-md bg-secondary px-5 py-2.5 text-sm font-medium text-secondary-foreground hover:bg-secondary/90">
+                      Start free checklist
+                    </button>
+                  </a>
+                  <a href="/pricing">
+                    <button class="inline-flex items-center rounded-md border border-primary-foreground/30 bg-transparent px-5 py-2.5 text-sm font-medium text-primary-foreground hover:bg-primary-foreground/10">
+                      See pricing
+                    </button>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+      <SiteFooter />
+    </div>
   </body>
 </html>

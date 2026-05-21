@@ -1,0 +1,79 @@
+---
+import DashboardLayout from "../../layouts/DashboardLayout.astro";
+
+const PROVIDERS = [
+  {
+    name: "OpenAI",
+    models: ["gpt-4o", "gpt-4o-mini"],
+    region: "US",
+    retention: "30 days (abuse monitoring)",
+    training: "Opt-out confirmed",
+    dpa: true,
+  },
+  {
+    name: "Anthropic",
+    models: ["claude-3.5-sonnet"],
+    region: "US",
+    retention: "30 days (abuse monitoring)",
+    training: "Opt-out confirmed",
+    dpa: true,
+  },
+  {
+    name: "Mistral (planned)",
+    models: ["mistral-large-latest"],
+    region: "EU",
+    retention: "Unknown",
+    training: "Pending review",
+    dpa: false,
+  },
+];
+---
+<DashboardLayout title="Model Providers — TransparentAI">
+  <div class="space-y-6">
+    <div class="flex items-start justify-between gap-4">
+      <div>
+        <div class="text-xs font-semibold uppercase tracking-wider text-accent">Inventory</div>
+        <h1 class="mt-1 text-2xl font-semibold tracking-tight text-primary">Model Providers</h1>
+        <p class="mt-1 text-sm text-muted-foreground">
+          Third-party model vendors and the data terms attached to each.
+        </p>
+      </div>
+      <button class="inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">+ Add provider</button>
+    </div>
+
+    <div class="grid gap-4 md:grid-cols-2">
+      {PROVIDERS.map((p) => (
+        <div class="rounded-lg border border-border bg-card p-6">
+          <div class="flex items-start justify-between">
+            <div class="flex items-center gap-2">
+              <div class="rounded-md bg-secondary p-2 text-primary">⚙</div>
+              <div>
+                <div class="font-semibold text-primary">{p.name}</div>
+                <div class="text-xs text-muted-foreground">{p.region}</div>
+              </div>
+            </div>
+            {p.dpa ? (
+              <span class="rounded-full bg-secondary px-2 py-0.5 text-[11px] font-medium text-secondary-foreground">DPA on file</span>
+            ) : (
+              <span class="rounded-full bg-warning/15 px-2 py-0.5 text-[11px] font-medium text-warning-foreground">DPA missing</span>
+            )}
+          </div>
+          <dl class="mt-5 space-y-2.5 text-sm">
+            <div class="flex justify-between gap-4">
+              <dt class="text-muted-foreground">Models</dt>
+              <dd class="text-right text-primary">{p.models.join(", ")}</dd>
+            </div>
+            <div class="flex justify-between gap-4">
+              <dt class="text-muted-foreground">Data retention</dt>
+              <dd class="text-right text-primary">{p.retention}</dd>
+            </div>
+            <div class="flex justify-between gap-4">
+              <dt class="text-muted-foreground">Training use</dt>
+              <dd class="text-right text-primary">{p.training}</dd>
+            </div>
+          </dl>
+        </div>
+      ))}
+    </div>
+  </div>
+</DashboardLayout>

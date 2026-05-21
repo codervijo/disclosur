@@ -1,0 +1,74 @@
+---
+import DashboardLayout from "../../layouts/DashboardLayout.astro";
+
+const GAPS = [
+  {
+    sev: "High",
+    title: "AI-generated summaries lack persistent labeling",
+    area: "Provenance (AB 853)",
+    owner: "Product",
+    recommendation: "Embed a visible 'AI-generated' badge and metadata tag on all summary outputs.",
+  },
+  {
+    sev: "Med",
+    title: "No public AI transparency page",
+    area: "SB 53",
+    owner: "Legal",
+    recommendation: "Publish a hosted disclosure page enumerating features, providers, and contact.",
+  },
+  {
+    sev: "Med",
+    title: "Provider list missing from Terms of Service",
+    area: "Disclosure",
+    owner: "Legal",
+    recommendation: "Append a sub-processor table referencing OpenAI and Anthropic with DPA links.",
+  },
+  {
+    sev: "Low",
+    title: "AI feature changelog not published",
+    area: "Process",
+    owner: "Product Marketing",
+    recommendation: "Add an AI changelog section to the public site, updated on each release.",
+  },
+];
+const sevClass = (s: string) =>
+  s === "High"
+    ? "bg-destructive/10 text-destructive"
+    : s === "Med"
+      ? "bg-warning/15 text-warning-foreground"
+      : "bg-secondary text-secondary-foreground";
+---
+<DashboardLayout title="Disclosure Gaps — TransparentAI">
+  <div class="space-y-6">
+    <div class="flex items-start justify-between gap-4">
+      <div>
+        <div class="text-xs font-semibold uppercase tracking-wider text-accent">Remediation</div>
+        <h1 class="mt-1 text-2xl font-semibold tracking-tight text-primary">Disclosure Gaps</h1>
+        <p class="mt-1 text-sm text-muted-foreground">
+          Findings against California SB 53, AB 853, and EU AI Act transparency duties.
+        </p>
+      </div>
+      <a href="/packet">
+        <button class="inline-flex items-center gap-2 rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground hover:bg-accent/10">Export remediation plan</button>
+      </a>
+    </div>
+
+    <div class="space-y-3">
+      {GAPS.map((g) => (
+        <div class="rounded-lg border border-border bg-card p-5">
+          <div class="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class={"rounded-full px-2 py-0.5 text-[11px] font-medium " + sevClass(g.sev)}>{g.sev}</span>
+                <span class="text-xs text-muted-foreground">{g.area}</span>
+              </div>
+              <div class="mt-2 font-medium text-primary">{g.title}</div>
+            </div>
+            <div class="text-xs text-muted-foreground">Owner · {g.owner}</div>
+          </div>
+          <p class="mt-3 text-sm text-muted-foreground">{g.recommendation}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</DashboardLayout>

@@ -1,0 +1,243 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+
+const SECTIONS = [
+  { n: "01", t: "Executive Summary" },
+  { n: "02", t: "Product AI Usage" },
+  { n: "03", t: "Model Provider Inventory" },
+  { n: "04", t: "User-Facing Disclosure Review" },
+  { n: "05", t: "California Transparency Considerations" },
+  { n: "06", t: "Open Questions for Counsel" },
+  { n: "07", t: "Recommended Remediation" },
+  { n: "08", t: "Public Disclosure Page Draft" },
+];
+
+const productUsage = {
+  head: ["Feature", "Type", "User-facing", "Disclosure today"],
+  rows: [
+    ["Meeting summarizer", "Text generation", "Yes", "Inline 'AI-generated' tag"],
+    ["In-app chat assistant", "Chatbot", "Yes", "Avatar + 'AI' label"],
+    ["Auto-tagging", "Classification", "Indirect", "None"],
+  ],
+};
+const providers = {
+  head: ["Provider", "Models", "Hosted by", "Data retention"],
+  rows: [
+    ["OpenAI", "gpt-4o, gpt-4o-mini", "OpenAI API", "30 days (zero-retention requested)"],
+    ["Anthropic", "claude-3-5-sonnet", "Anthropic API", "30 days"],
+  ],
+};
+const remediation = {
+  head: ["Priority", "Action", "Owner", "Target"],
+  rows: [
+    ["High", "Add persistent label to auto-tagged content", "Product", "Next release"],
+    ["High", "Publish public AI transparency page", "Legal + Marketing", "30 days"],
+    ["Med", "Update ToS provider list", "Legal", "Next ToS revision"],
+    ["Low", "Publish AI feature changelog", "Product", "60 days"],
+  ],
+};
+
+const today = new Date().toLocaleDateString();
+---
+<SiteLayout
+  title="Sample AI Disclosure Readiness Packet — TransparentAI"
+  description="A realistic preview of the counsel-ready packet TransparentAI generates."
+>
+  <section class="border-b border-border bg-surface">
+    <div class="mx-auto flex max-w-6xl flex-col gap-4 px-6 py-10 md:flex-row md:items-end md:justify-between">
+      <div>
+        <div class="text-xs font-semibold uppercase tracking-wider text-accent">Sample packet</div>
+        <h1 class="mt-1 text-3xl font-semibold tracking-tight text-primary md:text-4xl">
+          AI Disclosure Readiness Packet
+        </h1>
+        <p class="mt-1 text-sm text-muted-foreground">
+          Acme Notes, Inc. · Prepared {today} · Draft v1.3
+        </p>
+      </div>
+      <div class="flex gap-2">
+        <button class="inline-flex items-center gap-2 rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground hover:bg-accent/10">Print</button>
+        <button class="inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">Export PDF</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto grid max-w-6xl gap-8 px-6 py-12 lg:grid-cols-12">
+    <aside class="lg:col-span-3">
+      <div class="sticky top-24 rounded-lg border border-border bg-surface p-4">
+        <div class="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Contents</div>
+        <ul class="mt-3 space-y-1.5 text-sm">
+          {SECTIONS.map((s) => (
+            <li>
+              <a href={`#sec-${s.n}`} class="flex gap-3 rounded-md px-2 py-1.5 text-muted-foreground hover:bg-background hover:text-primary">
+                <span class="font-mono text-xs text-accent">{s.n}</span>
+                {s.t}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </aside>
+
+    <article class="lg:col-span-9">
+      <div class="rounded-lg border border-border bg-card">
+        <div class="border-b border-border bg-surface px-8 py-6">
+          <div class="flex items-center gap-2 text-xs text-muted-foreground">
+            Prepared by TransparentAI · For counsel review
+          </div>
+          <h2 class="mt-2 font-serif text-2xl font-semibold text-primary">
+            Acme Notes, Inc. — AI Disclosure Readiness Packet
+          </h2>
+        </div>
+
+        <div class="space-y-12 px-8 py-10 leading-relaxed text-primary">
+          <section id="sec-01" class="scroll-mt-24">
+            <div class="flex items-baseline gap-3 border-b border-border pb-2">
+              <span class="font-mono text-xs text-accent">01</span>
+              <h3 class="font-serif text-xl font-semibold text-primary">Executive Summary</h3>
+            </div>
+            <div class="mt-4 space-y-3 text-sm">
+              <p>
+                Acme Notes operates a user-facing AI meeting summarization product. Three
+                AI features are in production, powered by two third-party model providers
+                (OpenAI and Anthropic). Based on the company's self-reported usage and
+                California user base, two features are likely within scope of AB 853
+                content-provenance expectations and one of the three lacks a persistent
+                user-facing disclosure label.
+              </p>
+              <p>
+                Overall readiness score: <strong>72 / 100 (moderate)</strong>. Four open
+                gaps are tracked in §07.
+              </p>
+            </div>
+          </section>
+
+          <section id="sec-02" class="scroll-mt-24">
+            <div class="flex items-baseline gap-3 border-b border-border pb-2">
+              <span class="font-mono text-xs text-accent">02</span>
+              <h3 class="font-serif text-xl font-semibold text-primary">Product AI Usage</h3>
+            </div>
+            <div class="mt-4">
+              <div class="overflow-hidden rounded-md border border-border">
+                <table class="w-full text-sm">
+                  <thead class="bg-surface text-left text-xs uppercase tracking-wider text-muted-foreground">
+                    <tr>{productUsage.head.map((h) => <th class="px-4 py-2.5 font-medium">{h}</th>)}</tr>
+                  </thead>
+                  <tbody class="divide-y divide-border">
+                    {productUsage.rows.map((row) => (
+                      <tr>{row.map((c) => <td class="px-4 py-3 text-primary">{c}</td>)}</tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <section id="sec-03" class="scroll-mt-24">
+            <div class="flex items-baseline gap-3 border-b border-border pb-2">
+              <span class="font-mono text-xs text-accent">03</span>
+              <h3 class="font-serif text-xl font-semibold text-primary">Model Provider Inventory</h3>
+            </div>
+            <div class="mt-4">
+              <div class="overflow-hidden rounded-md border border-border">
+                <table class="w-full text-sm">
+                  <thead class="bg-surface text-left text-xs uppercase tracking-wider text-muted-foreground">
+                    <tr>{providers.head.map((h) => <th class="px-4 py-2.5 font-medium">{h}</th>)}</tr>
+                  </thead>
+                  <tbody class="divide-y divide-border">
+                    {providers.rows.map((row) => (
+                      <tr>{row.map((c) => <td class="px-4 py-3 text-primary">{c}</td>)}</tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <section id="sec-04" class="scroll-mt-24">
+            <div class="flex items-baseline gap-3 border-b border-border pb-2">
+              <span class="font-mono text-xs text-accent">04</span>
+              <h3 class="font-serif text-xl font-semibold text-primary">User-Facing Disclosure Review</h3>
+            </div>
+            <div class="mt-4 space-y-3 text-sm">
+              <p>
+                Disclosure language is present on two of three features. The auto-tagging
+                feature does not surface an indication that tags are AI-generated. This is
+                a likely gap for California users encountering AI-derived content without
+                labeling.
+              </p>
+            </div>
+          </section>
+
+          <section id="sec-05" class="scroll-mt-24">
+            <div class="flex items-baseline gap-3 border-b border-border pb-2">
+              <span class="font-mono text-xs text-accent">05</span>
+              <h3 class="font-serif text-xl font-semibold text-primary">California Transparency Considerations</h3>
+            </div>
+            <div class="mt-4 space-y-3 text-sm">
+              <ul class="list-inside list-disc space-y-2 text-sm text-muted-foreground marker:text-accent">
+                <li>SB 53: Public AI transparency page is recommended given user base &gt; 100k.</li>
+                <li>AB 853: Provenance labeling is recommended for generated text artifacts.</li>
+                <li>Consider documenting fine-tuning practices and retention defaults.</li>
+              </ul>
+            </div>
+          </section>
+
+          <section id="sec-06" class="scroll-mt-24">
+            <div class="flex items-baseline gap-3 border-b border-border pb-2">
+              <span class="font-mono text-xs text-accent">06</span>
+              <h3 class="font-serif text-xl font-semibold text-primary">Open Questions for Counsel</h3>
+            </div>
+            <div class="mt-4 space-y-3 text-sm">
+              <ol class="list-inside list-decimal space-y-2 text-sm">
+                <li>Does auto-tagging constitute "AI-generated content" requiring labeling?</li>
+                <li>Is a static disclosure page sufficient, or are per-feature notices required?</li>
+                <li>Do enterprise contracts require additional AI-usage notices to admins?</li>
+              </ol>
+            </div>
+          </section>
+
+          <section id="sec-07" class="scroll-mt-24">
+            <div class="flex items-baseline gap-3 border-b border-border pb-2">
+              <span class="font-mono text-xs text-accent">07</span>
+              <h3 class="font-serif text-xl font-semibold text-primary">Recommended Remediation</h3>
+            </div>
+            <div class="mt-4">
+              <div class="overflow-hidden rounded-md border border-border">
+                <table class="w-full text-sm">
+                  <thead class="bg-surface text-left text-xs uppercase tracking-wider text-muted-foreground">
+                    <tr>{remediation.head.map((h) => <th class="px-4 py-2.5 font-medium">{h}</th>)}</tr>
+                  </thead>
+                  <tbody class="divide-y divide-border">
+                    {remediation.rows.map((row) => (
+                      <tr>{row.map((c) => <td class="px-4 py-3 text-primary">{c}</td>)}</tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <section id="sec-08" class="scroll-mt-24">
+            <div class="flex items-baseline gap-3 border-b border-border pb-2">
+              <span class="font-mono text-xs text-accent">08</span>
+              <h3 class="font-serif text-xl font-semibold text-primary">Public Disclosure Page Draft</h3>
+            </div>
+            <div class="mt-4 space-y-3 text-sm">
+              <p class="text-sm text-muted-foreground">Full draft available as a hosted preview.</p>
+              <a href="/disclosure" class="mt-3 inline-flex">
+                <button class="inline-flex items-center gap-2 rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground hover:bg-accent/10">
+                  Open hosted preview
+                </button>
+              </a>
+            </div>
+          </section>
+        </div>
+
+        <div class="border-t border-border bg-surface px-8 py-5 text-xs text-muted-foreground">
+          This packet is generated by TransparentAI for internal review by qualified
+          counsel. It is not legal advice.
+        </div>
+      </div>
+    </article>
+  </section>
+</SiteLayout>

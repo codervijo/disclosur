@@ -1,0 +1,84 @@
+---
+import DashboardLayout from "../../layouts/DashboardLayout.astro";
+
+const FEATURES = [
+  {
+    name: "Meeting summarizer",
+    description: "Generates summary text from uploaded meeting transcripts.",
+    type: "Generation",
+    providers: ["OpenAI"],
+    labeled: true,
+    status: "Documented",
+  },
+  {
+    name: "In-app chat assistant",
+    description: "Conversational assistant grounded on the user's notes.",
+    type: "Chat",
+    providers: ["Anthropic"],
+    labeled: true,
+    status: "Documented",
+  },
+  {
+    name: "Auto-tagging",
+    description: "Suggests organizational tags for new notes.",
+    type: "Classification",
+    providers: ["OpenAI"],
+    labeled: false,
+    status: "Needs labeling",
+  },
+];
+---
+<DashboardLayout title="AI Features — TransparentAI">
+  <div class="space-y-6">
+    <div class="flex items-start justify-between gap-4">
+      <div>
+        <div class="text-xs font-semibold uppercase tracking-wider text-accent">Inventory</div>
+        <h1 class="mt-1 text-2xl font-semibold tracking-tight text-primary">AI Features</h1>
+        <p class="mt-1 text-sm text-muted-foreground">
+          Every user-facing AI surface in your product. Counsel reviews this list first.
+        </p>
+      </div>
+      <a href="/questionnaire">
+        <button class="inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">+ Add feature</button>
+      </a>
+    </div>
+
+    <div class="overflow-hidden rounded-lg border border-border bg-card">
+      <table class="w-full text-sm">
+        <thead class="bg-surface text-left text-xs uppercase tracking-wider text-muted-foreground">
+          <tr>
+            <th class="px-4 py-3">Feature</th>
+            <th class="px-4 py-3">Type</th>
+            <th class="px-4 py-3">Providers</th>
+            <th class="px-4 py-3">Labeling</th>
+            <th class="px-4 py-3">Status</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-border">
+          {FEATURES.map((f) => (
+            <tr>
+              <td class="px-4 py-3">
+                <div class="flex items-start gap-2">
+                  <div>
+                    <div class="font-medium text-primary">{f.name}</div>
+                    <div class="text-xs text-muted-foreground">{f.description}</div>
+                  </div>
+                </div>
+              </td>
+              <td class="px-4 py-3 text-muted-foreground">{f.type}</td>
+              <td class="px-4 py-3 text-muted-foreground">{f.providers.join(", ")}</td>
+              <td class="px-4 py-3">
+                {f.labeled ? (
+                  <span class="rounded-full bg-secondary px-2 py-0.5 text-[11px] font-medium text-secondary-foreground">Persistent</span>
+                ) : (
+                  <span class="rounded-full bg-destructive/10 px-2 py-0.5 text-[11px] font-medium text-destructive">Missing</span>
+                )}
+              </td>
+              <td class="px-4 py-3 text-muted-foreground">{f.status}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</DashboardLayout>
