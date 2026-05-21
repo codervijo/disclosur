@@ -2,8 +2,7 @@
    the design intent and CSS variables remain available if Tailwind v4 is
    wired into the Astro build later. */
 
-@import "tailwindcss" source(none);
-@source "../src";
+@import "tailwindcss";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
